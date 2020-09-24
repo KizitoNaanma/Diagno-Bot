@@ -36,8 +36,8 @@ print (len(documents), "documents")
 print (len(classes), "classes", classes)
 print (len(words), "unique lemmatized words", words)
 
-pickle.dump(words, open('words.pickle','wb'))
-pickle.dump(words, open('classes.pickle','wb'))
+pickle.dump(words, open('words.pkl','wb'))
+pickle.dump(words, open('classes.pkl','wb'))
 
 
 
