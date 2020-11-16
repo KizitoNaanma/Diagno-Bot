@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <form class="trials" action="" method="post">
+    {% csrf_token %}
+
+    {{ trial_formset.management_form }}
+
+    {% for trial_form in trial_formset %}
+        <div class="trial-formset">
+            {{ trial_form.symptom }}
+
+            {% if trial_form.symptom.errors %}
+                {% for error in trial_form.symptom.errors %}
+                    {{ error|escape }}
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    {% endfor %}
+    <input type="hidden" value="false" name="additems" id="additems">
+    <button class="btn btn-primary" id="additemsbutton">Add more</button>
+    <input type="submit" name="button" value="Try">
+  </form>
+
+
+  <h3>{{new_symptoms}}</h3>
+
+  <script>
+  $(document).ready(function() {
+          $("#additemsbutton").on('click',function(event) {
+           $("#additems").val("true");
+         });
+  });
+  </script>
+{% endblock %}

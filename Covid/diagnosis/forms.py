@@ -18,23 +18,49 @@ dict_zip = {
        'zipped4' : zip(l1, l1)
 }
 
-class DemoForm(forms.Form):
-    demoSymp = forms.ChoiceField(choices=dict_zip['zipped1'])
 
-DemoFormSet = formset_factory(DemoForm, extra=0)
 
-class PractForm(forms.Form):
-    practSymp = forms.CharField()
 
-class BasePractForm(BaseFormSet):
-    def cleaned_data(self):
-        """
-        Return a list of form.cleaned_data dicts for every form in self.forms.
-        """
-        if not self.is_valid():
-            raise AttributeError("'%s' object has no attribute 'cleaned_data'" % self.__class__.__name__)
 
-        return [form.cleaned_data for form in self.forms]
+
+# class PractForm(forms.Form):
+#     symptom = forms.CharField()
+
+
+
+class TrialForm(forms.Form):
+    symptom = forms.CharField()
+
+class BaseTrialFormSet(BaseFormSet):
+    def clean(self):
+        symptoms = []
+        duplicates = False
+
+        for form in self.forms:
+
+            if form.cleaned_data:
+                symptom = form.cleaned_data['symptom']
+
+                if symptom:
+                    if symptom in symptoms:
+                        duplicates = True
+                        symptoms.append(symptom)
+                if duplicates:
+                    raise forms.ValidationError(
+                    'Symptom fields musst be unique',
+                    code = 'duplicate_symptoms'
+                    )
+
+        return symptoms
+
+
+
+
+
+
+
+
+
 
 
 class PredForm(forms.Form):

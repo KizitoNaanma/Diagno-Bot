@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<button onclick="addInput()">click me</button>
 <form method="POST" class="post-form">
   {% csrf_token %}
   {{form.as_p}}

@@ -22,13 +22,13 @@ def LandingView(request):
 
 
 
-def DemoView(request):
-    if request.method == "POST":
-        formset = DemoFormSet(request.POST)
-
-    else:
-        formset = DemoFormSet()
-    return render(request, 'demo.html', {'formset': formset})
+# def DemoView(request):
+#     if request.method == "POST":
+#         formset = DemoFormSet(request.POST)
+#
+#     else:
+#         formset = DemoFormSet()
+#     return render(request, 'demo.html', {'formset': formset})
 
 def PractView(request):
     extra_forms = 2
@@ -48,7 +48,6 @@ def PractView(request):
             symptoms = PractSet.cleaned_data
 
 
-
         # symptoms = [form.cleaned_data for form in self.formset]
         # [form.cleaned_data for form in self.forms]
         # for form in formset:
@@ -59,6 +58,39 @@ def PractView(request):
         symptoms = PractSet.cleaned_data
 
     return render(request,'pract.html',{'formset':formset,'symptoms':symptoms})
+
+
+def TrialView(request):
+    TrialFormSet = formset_factory(TrialForm, formset=BaseTrialFormSet,extra=2)
+    new_symptoms = []
+    extra_forms=1
+    if request.method == 'POST':
+        trial_formset = TrialFormSet(request.POST)
+
+        if trial_formset.is_valid():
+            new_symptoms = []
+
+            for trial in trial_formset:
+                symptom = trial.cleaned_data.get('symptom')
+                if symptom:
+                    new_symptoms.append(symptom)
+
+        if 'additems' in request.POST and request.POST['additems'] == 'true':
+            formset_dictionary_copy = request.POST.copy()
+            formset_dictionary_copy['form-TOTAL_FORMS'] = int(formset_dictionary_copy['form-TOTAL_FORMS']) + extra_forms
+            trial_formset = TrialFormSet(formset_dictionary_copy)
+        else:
+            trial_formset = TrialFormSet()
+
+    else:
+        trial_formset = TrialFormSet()
+
+    context = {'trial_formset':trial_formset,
+                'new_symptoms':new_symptoms}
+
+    return render(request, 'trial.html', context)
+
+
 
 
 
