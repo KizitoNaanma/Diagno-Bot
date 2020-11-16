@@ -1,6 +1,9 @@
 from django.urls import path
-from diagnosis import views
+from . import views
 
 urlpatterns = [
-    path('', views.LandingView.as_view(),name='landing'),
+    path('', views.LandingView,name='landing'),
+    path('form/', views.Prediction_view, name='form'),
+    path('demo/', views.DemoView, name='demo'),
+    path('pract/', views.PractView, name='pract')
 ]
