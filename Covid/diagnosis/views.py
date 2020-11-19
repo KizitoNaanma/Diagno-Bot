@@ -29,23 +29,23 @@ def LandingView(request):
 #     else:
 #         formset = DemoFormSet()
 #     return render(request, 'demo.html', {'formset': formset})
-
-def PractView(request):
-    extra_forms = 2
-    PractFormSet = formset_factory(PractForm, extra=extra_forms)
-    PractSet = BaseDemoForm()
-    symptoms = []
-
-    if request.method == 'POST':
-
-        if 'additems' in request.POST and request.POST['additems'] == 'true':
-            formset_dictionary_copy = request.POST.copy()
-            formset_dictionary_copy['form-TOTAL_FORMS'] = int(formset_dictionary_copy['form-TOTAL_FORMS']) + extra_forms
-            formset = PractFormSet(formset_dictionary_copy)
-            symptoms = PractSet.cleaned_data
-        else:
-            formset = PractFormSet(request.POST)
-            symptoms = PractSet.cleaned_data
+#
+# def PractView(request):
+#     extra_forms = 2
+#     PractFormSet = formset_factory(PractForm, extra=extra_forms)
+#     PractSet = BaseDemoForm()
+#     symptoms = []
+#
+#     if request.method == 'POST':
+#
+#         if 'additems' in request.POST and request.POST['additems'] == 'true':
+#             formset_dictionary_copy = request.POST.copy()
+#             formset_dictionary_copy['form-TOTAL_FORMS'] = int(formset_dictionary_copy['form-TOTAL_FORMS']) + extra_forms
+#             formset = PractFormSet(formset_dictionary_copy)
+#             symptoms = PractSet.cleaned_data
+#         else:
+#             formset = PractFormSet(request.POST)
+#             symptoms = PractSet.cleaned_data
 
 
         # symptoms = [form.cleaned_data for form in self.formset]
@@ -53,17 +53,20 @@ def PractView(request):
         # for form in formset:
         #     symptoms.append(form.cleaned_data)
         # symptoms = PractForm.cleaned_data
-    else:
-        formset = PractFormSet()
-        symptoms = PractSet.cleaned_data
+    # else:
+    #     formset = PractFormSet()
+    #     symptoms = PractSet.cleaned_data
+    #
+    # return render(request,'pract.html',{'formset':formset,'symptoms':symptoms})
 
-    return render(request,'pract.html',{'formset':formset,'symptoms':symptoms})
 
-
-def TrialView(request):
-    TrialFormSet = formset_factory(TrialForm, formset=BaseTrialFormSet,extra=2)
+def PredictionView(request):
+    TrialFormSet = formset_factory(TrialForm, formset=BaseTrialFormSet,extra=8)
     new_symptoms = []
     extra_forms=1
+    message = ''
+    input_vector = np.zeros(len(symptoms_dict))
+
     if request.method == 'POST':
         trial_formset = TrialFormSet(request.POST)
 
@@ -75,18 +78,25 @@ def TrialView(request):
                 if symptom:
                     new_symptoms.append(symptom)
 
-        if 'additems' in request.POST and request.POST['additems'] == 'true':
-            formset_dictionary_copy = request.POST.copy()
-            formset_dictionary_copy['form-TOTAL_FORMS'] = int(formset_dictionary_copy['form-TOTAL_FORMS']) + extra_forms
-            trial_formset = TrialFormSet(formset_dictionary_copy)
-        else:
-            trial_formset = TrialFormSet()
+            if 'additems' in request.POST and request.POST['additems'] == 'true':
+                formset_dictionary_copy = request.POST.copy()
+                formset_dictionary_copy['form-TOTAL_FORMS'] = int(formset_dictionary_copy['form-TOTAL_FORMS']) + extra_forms
+                trial_formset = TrialFormSet(formset_dictionary_copy)
+            else:
+                trial_formset = TrialFormSet()
+
+
+            for i in new_symptoms:
+                input_vector[symptoms_dict[i]] = 1
+
+
+            message = rf_clf.predict([input_vector])[0]
 
     else:
         trial_formset = TrialFormSet()
 
     context = {'trial_formset':trial_formset,
-                'new_symptoms':new_symptoms}
+                'message':message}
 
     return render(request, 'trial.html', context)
 
@@ -94,35 +104,35 @@ def TrialView(request):
 
 
 
-def Prediction_view(request):
-    template_name = 'form.html'
-    message = ''
-    input_vector = np.zeros(len(symptoms_dict))
-
-    if request.method == 'POST':
-        form = PredForm(request.POST)
-
-        if form.is_valid():
-            sympton_1 = form.cleaned_data['symptom1']
-            sympton_2 = form.cleaned_data['symptom2']
-            sympton_3 = form.cleaned_data['symptom3']
-            sympton_4 = form.cleaned_data['symptom4']
-
-            psymptoms = [sympton_1, sympton_2, sympton_3, sympton_4]
-
-
-            input_vector[[symptoms_dict[sympton_1], symptoms_dict[sympton_2], symptoms_dict[sympton_3], symptoms_dict[sympton_4]]] = 1
-
-
-            message = rf_clf.predict([input_vector])[0]
-
-            context = {'form':form,
-                        'message':message}
-
-    else :
-        form = PredForm()
-        context = {
-            'form':form,
-            'message':message }
-
-    return render(request, template_name, context)
+# def PredictionView(request):
+#     template_name = 'form.html'
+#     message = ''
+#     input_vector = np.zeros(len(symptoms_dict))
+#
+#     if request.method == 'POST':
+#         form = PredForm(request.POST)
+#
+#         if form.is_valid():
+#             sympton_1 = form.cleaned_data['symptom1']
+#             sympton_2 = form.cleaned_data['symptom2']
+#             sympton_3 = form.cleaned_data['symptom3']
+#             sympton_4 = form.cleaned_data['symptom4']
+#
+#             psymptoms = [sympton_1, sympton_2, sympton_3, sympton_4]
+#
+#
+#             input_vector[[symptoms_dict[sympton_1], symptoms_dict[sympton_2], symptoms_dict[sympton_3], symptoms_dict[sympton_4]]] = 1
+#
+#
+#             message = rf_clf.predict([input_vector])[0]
+#
+#             context = {'form':form,
+#                         'message':message}
+#
+#     else :
+#         form = PredForm()
+#         context = {
+#             'form':form,
+#             'message':message }
+#
+#     return render(request, template_name, context)

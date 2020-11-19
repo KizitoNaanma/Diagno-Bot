@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST" class="post-form">
+  {% csrf_token %}
+  {{form.as_p}}
+  <button type="submit" class="save btn btn-default">Predict</button>
+</form>
+
+<h3>You have {{message}}</h3>
+
+<script>
+    function addInput(){
+      var form = document.querySelector("form");
+      var mi = document.createElement("select");
+      for (var i = 0; i < array.length; i++) {
+          var option = document.createElement("option");
+          option.value = array[i];
+          option.text = array[i];
+          form.appendChild(mi).appendChild(option)
+      }
+
+    }
+</script>
+{% endblock %}

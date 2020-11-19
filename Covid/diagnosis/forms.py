@@ -29,7 +29,7 @@ dict_zip = {
 
 
 class TrialForm(forms.Form):
-    symptom = forms.CharField()
+    symptom = forms.ChoiceField(choices=dict_zip['zipped1'])
 
 class BaseTrialFormSet(BaseFormSet):
     def clean(self):

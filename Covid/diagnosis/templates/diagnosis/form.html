@@ -1,25 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form method="POST" class="post-form">
-  {% csrf_token %}
-  {{form.as_p}}
-  <button type="submit" class="save btn btn-default">Predict</button>
-</form>
 
-<h3>You have {{message}}</h3>
+<form method="POST">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <div class="">
+      {{formset.as_p}}
+    </div>
+
+    <input type="hidden" value="false" name="additems" id="additems">
+    <button class="btn btn-primary" id="additemsbutton">Add more</button>
+
+    <input type="submit" value="Predict" class="btn btn-primary">
+
+</form>
+<h3>You inputted {{symptoms}}</h3>
 
 <script>
-    function addInput(){
-      var form = document.querySelector("form");
-      var mi = document.createElement("select");
-      for (var i = 0; i < array.length; i++) {
-          var option = document.createElement("option");
-          option.value = array[i];
-          option.text = array[i];
-          form.appendChild(mi).appendChild(option)
-      }
-
-    }
+$(document).ready(function() {
+        $("#additemsbutton").on('click',function(event) {
+         $("#additems").val("true");
+       });
+});
 </script>
+
+
 {% endblock %}
