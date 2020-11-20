@@ -23,13 +23,8 @@ dict_zip = {
 
 
 
-# class PractForm(forms.Form):
-#     symptom = forms.CharField()
-
-
-
 class TrialForm(forms.Form):
-    symptom = forms.ChoiceField(choices=dict_zip['zipped1'])
+    symptom = forms.ChoiceField(choices=dict_zip['zipped1'],widget=forms.Select(attrs={'id':'firstname'}))
 
 class BaseTrialFormSet(BaseFormSet):
     def clean(self):
@@ -68,17 +63,3 @@ class PredForm(forms.Form):
     symptom2 = forms.ChoiceField(choices=dict_zip['zipped2'])
     symptom3 = forms.ChoiceField(choices=dict_zip['zipped3'])
     symptom4 = forms.ChoiceField(choices=dict_zip['zipped4'])
-
-
-
-
-
-# filename = 'finalized_model.sav'
-# pickle.dump(model, open(filename, 'wb'))
-#
-# # some time later...
-#
-# # load the model from disk
-# loaded_model = pickle.load(open(filename, 'rb'))
-# result = loaded_model.score(X_test, Y_test)
-# print(result)

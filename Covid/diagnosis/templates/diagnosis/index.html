@@ -1,6 +1,16 @@
-{% extends "base.html" %}
+{% extends "index_base.html" %}
 
 {% block content %}
 
-  <h1>WELCOME TO DIAGNO SOMETHING</h1>
+<div class="container">
+  <div class="child">
+      <h1>Welcome to Diagno Something</h1><br><br>
+      <div class="pred">
+
+      <a href="{% url 'diagnosis:predict' %}" class="btn btn-simple">Diagnose</a>
+      </div>
+  </div>
+
+</div>
+
 {% endblock %}

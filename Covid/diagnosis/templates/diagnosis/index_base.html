@@ -6,40 +6,69 @@
 
 
       <link rel="stylesheet" href="{% static 'diagnosis/css/style.css' %}">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Viga">
-
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/css/mdb.min.css">
       <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Viga">
       <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      {% comment %} <script src="{% static 'diagnosis/js/master.js'%}" type="text/javascript" ></script> {% endcomment %}
 
     <title></title>
     <style media="screen">
-    body {
-       background-image:url('{% static "diagnosis/images/gallery_02.jpg" %}');
-       background-repeat:no-repeat;
-       background-size:100%;
-       }
-      nav {
-        background-color: #3949ab;
-      }
+     body {
+        background-image:url('{% static "diagnosis/images/home.jpg" %}');
+        background-repeat:no-repeat;
+        background-size:100%;
+        }
+
       h3{
         font-family: Viga;
       }
-      footer {
-        background-color: #3949ab;
-      }
-      a:hover{
-        color: #bbdefb;
-      }
-    </style>
 
+     footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      /* height: 40px; */
+      /* padding-bottom:25px;
+      padding-top: 25px; */
+      margin: inherit;
+
+      width: 100%;
+      text-align: center;
+      opacity: 0.4;
+    }
+
+      .container {
+        position: relative;
+      }
+
+      .child {
+
+      position: fixed;
+      font-family: Viga;
+      top: 50%;
+      left: 50%;
+      /* bring your own prefixes */
+      transform: translate(-50%, -50%);
+    }
+    .pred {
+      position: fixed;
+      font-family: Viga;
+      top: 100%;
+      left: 50%;
+      /* bring your own prefixes */
+      transform: translate(-50%, -50%);
+    }
+
+    </style>
   </head>
-  <body>
-    <nav class="navbar nav">
-      <a class="navbar-brand" href="{% url 'diagnosis:landing' %}" style="">
+  <body >
+    <nav class="navbar navbar-light bg-transparent">
+      <a class="navbar-brand" href="{% url 'diagnosis:landing' %}">
         <b>Diagno</b>
         </a>
     </nav>
@@ -50,7 +79,7 @@
 
 </body>
 
-  <footer class="page-footer font-small pt-4">
+  <footer class="page-footer font-small mdb-color pt-4">
         <!-- Footer -->
         <div class="row d-flex align-items-center">
 
@@ -58,10 +87,7 @@
               <div class="col-md-7 col-lg-8">
 
                 <!--Copyright-->
-                <p class="text-center text-md-left">© 2020 Copyright:
-                  <a href="https://mdbootstrap.com/">
-                    <strong> MDBootstrap.com</strong>
-                  </a>
+                <p class="text-center text-md-left">© 2020 Copyright
                 </p>
 
               </div>
@@ -85,7 +111,7 @@
                     </li>
 
                     <li class="list-inline-item">
-                      <a href="https://github.com/KizitoNaanma" class="btn-floating btn-sm rgba-white-slight mx-1">
+                      <a class="btn-floating btn-sm rgba-white-slight mx-1">
                         <i class="fab fa-github-square"></i>
                       </a>
                     </li>

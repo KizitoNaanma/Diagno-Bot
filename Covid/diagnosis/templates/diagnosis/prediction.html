@@ -1,0 +1,68 @@
+{% extends "index_base.html" %}
+
+{% block content %}
+
+<div class="container register">
+    <div class="row">
+
+        <div class="col-md-3 register-left">
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+            <h3>Welcome</h3>
+            <p>Please take note that this isn't very accurate</p><br>
+            <p>You have {{message}}</p>
+        </div>
+        <div class="col-md-9 register-right">
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h3 class="register-heading">What are your symptoms</h3>
+                    <div class="row register-form">
+
+                      <div class="col-md-6">
+
+                          <form  action="" method="post">
+                              {% csrf_token %}
+
+                              {{ trial_formset.management_form }}
+
+                              {% for trial_form in trial_formset %}
+                                  <div class="form-group">
+                                      {{ trial_form.symptom }}
+
+                                      {% if trial_form.symptom.errors %}
+                                          {% for error in trial_form.symptom.errors %}
+                                              {{ error|escape }}
+                                          {% endfor %}
+                                      {% endif %}
+                                  </div>
+
+                              {% endfor %}
+                              <div class="col-md-6">
+                                  <input type="submit" class="btnRegister"  value="Predict"/>
+                                  <input type="hidden" value="false" name="additems" id="additems">
+                                  <button class="btnRegister" id="additemsbutton">Add</button>
+                              </div>
+                          </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+     </div>
+</div>
+
+
+    <script>
+    $(document).ready(function() {
+            $("#additemsbutton").on('click',function(event) {
+             $("#additems").val("true");
+           });
+    });
+    </script>
+
+
+
+  {% endblock %}
