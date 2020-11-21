@@ -1,4 +1,4 @@
-{% extends "index_base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 
@@ -8,7 +8,8 @@
         <div class="col-md-3 register-left">
             <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
             <h3>Welcome</h3>
-            <p>Please take note that this isn't very accurate</p><br>
+            <p>Please take note that this isn't very accurate. Hence, you shouldn't rely on the result; For now.</p><br>
+            <p>Result will be displayed below</p>
             <p>You have {{message}}</p>
         </div>
         <div class="col-md-9 register-right">
@@ -18,7 +19,7 @@
                     <h3 class="register-heading">What are your symptoms</h3>
                     <div class="row register-form">
 
-                      <div class="col-md-6">
+                      <div class="inputs">
 
                           <form  action="" method="post">
                               {% csrf_token %}
@@ -37,11 +38,16 @@
                                   </div>
 
                               {% endfor %}
-                              <div class="col-md-6">
-                                  <input type="submit" class="btnRegister"  value="Predict"/>
+                              {# <div class=""> #}
+                                {# <div class="col-sm-4 buts"><a href="{% url 'diagnosis:predict' %}" id=""class="btnRegister">Reset</a></div> #}
+                                <div class="col-sm-4 buts"><input type="submit" class="btnRegister"  value="Predict"/></div>
+                                <div class="col-sm-4 buts"><button class="btnRegister" id="additemsbutton">Add</button></div>
+                                <div class="col-sm-4 buts"><input class="btnRegister" type="button" onclick="location.href=href='{% url "diagnosis:predict" %}';" value="Reset">
+                                </div>
                                   <input type="hidden" value="false" name="additems" id="additems">
-                                  <button class="btnRegister" id="additemsbutton">Add</button>
-                              </div>
+                                  {% comment %} <a href="{% url 'diagnosis:predict' %}" class="btnRegister">Reset</a>
+                                  <button class="btnRegister" id="additemsbutton">Add</button> {% endcomment %}
+                              {# </div> #}
                           </form>
 
                     </div>

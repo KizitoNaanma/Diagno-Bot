@@ -14,6 +14,8 @@
       <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
       <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Crete+Round:ital@1&display=swap" rel="stylesheet">
 
     <title></title>
     <style media="screen">
@@ -23,24 +25,51 @@
        background-size:100%;
        }
       nav {
-        background-color: #3949ab;
+        background-color: #1565c0;
+        opacity: 0.5;
       }
+      #firstname{
+        border: 2px solid #1565c0;
+        width: 400px;
+        padding: 5px 12px;
+        border-radius: 10px;
+        color: #1565c0;
+        font-family: 'Crete Round', serif;
+      }
+      .row1{
+        border: 1px solid red;
+        align-items: center;
+      }
+      .inputs{
+        margin: auto;
+      }
+      .buts{
+        text-align: center;
+        padding: 5px;
+        margin: auto;
+      }
+
       h3{
         font-family: Viga;
+
       }
       footer {
-        background-color: #3949ab;
+        background-color: #1565c0;
+        opacity: 0.5;
       }
       a:hover{
         color: #bbdefb;
       }
+      /* strong{
+        color: #1a237e
+      } */
     </style>
 
   </head>
   <body>
     <nav class="navbar nav">
-      <a class="navbar-brand" href="{% url 'diagnosis:landing' %}" style="">
-        <b>Diagno</b>
+      <a class="navbar-brand" href="{% url 'diagnosis:landing' %}" style="color:white">
+        <strong>Diagno</strong>
         </a>
     </nav>
 
